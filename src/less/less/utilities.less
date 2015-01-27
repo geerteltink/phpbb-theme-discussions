@@ -1,0 +1,36 @@
+//------------------------------------------------------------------------------
+// Utilities
+//------------------------------------------------------------------------------
+// The missing bootstrap utilities
+//------------------------------------------------------------------------------
+
+// Make images responsive... by default
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+.avatar {
+    img {
+        max-width: (@font-size-base * 4);
+        max-width: (@font-size-base * 4);
+    }
+}
+
+.avatar-circle {
+    img {
+        border-radius: 50%;
+    }
+}
+
+.avatar-xs {
+    img {
+        max-width: @font-size-base;
+        max-width: @font-size-base;
+    }
+}
+
+// Get a nice ellipsis to cut off text that's too large
+.text-truncate {
+    .text-overflow();
+}

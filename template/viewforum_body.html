@@ -1,0 +1,232 @@
+{% extends 'layout.html.twig' %}
+
+{% block content %}
+
+    {% if MODERATORS or U_MCP %}
+    <div>
+    	{% if MODERATORS %}<p><strong>{% if S_SINGLE_MODERATOR %}{L_MODERATOR}{% else %}{L_MODERATORS}{% endif %}{L_COLON}</strong> {{ MODERATORS }}</p>{% endif %}
+    </div>
+    {% endif %}
+
+    {% if S_FORUM_RULES %}
+    <div class="alert alert-info" role="alert">
+        {% if U_FORUM_RULES %}
+            <a href="{{ U_FORUM_RULES }}" class="alert-link">{L_FORUM_RULES}</a>
+        {% else %}
+            <strong>{L_FORUM_RULES}</strong><br />
+            {{ FORUM_RULES }}
+        {% endif %}
+    </div>
+    {% endif %}
+
+    {% if S_HAS_SUBFORUM %}
+        {% if not S_IS_BOT and U_MARK_FORUMS %}
+            <div class="clearfix">
+                <div class="btn-toolbar pull-right" role="toolbar">
+                    <div class="btn-group btn-group-sm">
+                        <a href="{{ U_MARK_FORUMS }}" class="btn btn-sm btn-default" title="{L_MARK_SUBFORUMS_READ}">
+                            <i class="icon icon-mark"></i>
+                            <span class="hidden-xs">{L_MARK_SUBFORUMS_READ}</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    	{% include 'includes/forumlist_body.html.twig' %}
+    {% endif %}
+
+    {% if S_DISPLAY_POST_INFO or loops.pagination or TOTAL_POSTS or TOTAL_TOPICS %}
+    	<div class="clearfix">
+            <div class="btn-toolbar pull-left" role="toolbar">
+                {% if not S_IS_BOT and S_DISPLAY_POST_INFO %}
+                <div class="btn-group btn-group-sm">
+                    <!-- EVENT viewforum_buttons_top_before -->
+                    <a href="{{ U_POST_NEW_TOPIC }}" class="btn btn-default btn-subtle" title="{% if S_IS_LOCKED %}{L_FORUM_LOCKED}{% else %}{L_POST_TOPIC}{% endif %}">
+                        <i class="icon {% if S_IS_LOCKED %}icon-locked{% else %}icon-new{% endif %}"></i>
+                        <span class="hidden-xs">{% if S_IS_LOCKED %}{L_BUTTON_FORUM_LOCKED}{% else %}{L_BUTTON_NEW_TOPIC}{% endif %}</span>
+                    </a>
+                    <!-- EVENT viewforum_buttons_top_after -->
+                </div>
+                {% endif %}
+
+                {% if S_DISPLAY_SEARCHBOX %}
+                <div class="btn-group btn-group-sm">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" title="Search">
+                        <i class="icon icon-search"></i>
+                        <span class="caret"></span>
+                        <span class="sr-only">Search</span>
+                    </button>
+                    <div class="dropdown-menu dropdown-search js-keep-open" itemscope itemtype="http://schema.org/WebSite">
+                        <meta itemprop="url" content="{{ U_PORTAL }}" />
+                        <form method="get" action="{{ S_SEARCHBOX_ACTION }}" class="form-inline" itemprop="potentialAction" itemscope itemtype="http://schema.org/SearchAction">
+                            <meta itemprop="target" content="{{ U_PORTAL }}search.php?keywords={{ query }}" />
+                            <div class="input-group input-group-sm">
+                                <input type="search" name="keywords" id="search_keywords" class="form-control" placeholder="{L_SEARCH_FORUM}" itemprop="query-input">
+                                <div class="input-group-btn">
+                                    <button type="submit" class="btn btn-default" title="{L_SEARCH}">
+                                        GO!
+                                    </button>
+                                    <a href="{{ U_SEARCH }}" class="btn btn-default" title="{L_SEARCH_ADV}">
+                                        <i class="icon icon-search-advanced"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            {{ S_SEARCH_LOCAL_HIDDEN_FIELDS }}
+                        </form>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+
+            <div class="btn-toolbar pull-right" role="toolbar">
+                {% if not S_IS_BOT and U_MARK_TOPICS and loops.topicrow %}
+                    <div class="btn-group btn-group-sm">
+                        <a href="{{ U_MARK_TOPICS }}" class="btn btn-sm btn-default" title="{L_MARK_TOPICS_READ}">
+                            <i class="icon icon-mark"></i>
+                            <span class="hidden-xs">{L_MARK_TOPICS_READ}</span>
+                        </a>
+                    </div>
+                {% endif %}
+                <div class="btn-group btn-group-sm">
+                {% if loops.pagination %}
+                    {% include 'includes/pagination.html.twig' %}
+                {% else %}
+                    {{ PAGE_NUMBER }}
+                {% endif %}
+                </div>
+            </div>
+    	</div>
+    {% endif %}
+
+    {% if S_NO_READ_ACCESS %}
+        <div class="alert alert-warning" role="alert">
+            <strong>{L_NO_READ_ACCESS}</strong>
+        </div>
+
+    	{% if not S_USER_LOGGED_IN and not S_IS_BOT %}
+    		{% include 'includes/login_form.html.twig' %}
+    	{% endif %}
+    {% endif %}
+
+    <ul class="topic">
+    {% for topic in loops.topicrow  %}
+    	{% if loop.first %}
+            <li class="row topic-header">
+                <div class="col-xs-8 col-md-10">
+                    <div class="topic-header-subject">Subject</div>
+                </div>
+                <div class="col-xs-2 col-md-1">
+                    Replies
+                </div>
+                <div class="col-xs-2 col-md-1">
+                    Views
+                </div>
+            </li>
+    	{% endif %}
+        <li class="row topic-item">
+            <div class="col-xs-8 col-md-10">
+                <div class="media">
+                    {% if not S_IS_BOT %}
+                        <a href="{% if topic.S_UNREAD_TOPIC %}{{ topic.U_NEWEST_POST }}{% else %}{{ topic.U_LAST_POST }}{% endif %}" title="{L_GOTO_LAST_POST}" class="media-object media-object-xs">
+                            <i class="icon icon-topic{% if topic.S_POST_GLOBAL or topic.S_POST_ANNOUNCE %}-announcement{% elseif topic.S_POST_STICKY %}-sticky{% elseif topic.S_TOPIC_REPORTED %}-reported{% endif %}"></i>
+                        </a>
+                    {% else %}
+                        <div class="media-object media-object-xs">
+                            <i class="icon icon-topic{% if topic.S_POST_GLOBAL or topic.S_POST_ANNOUNCE %}-announcement{% elseif topic.S_POST_STICKY %}-sticky{% elseif topic.S_TOPIC_REPORTED %}-reported{% endif %}"></i>
+                        </div>
+                    {% endif %}
+                    <div class="media-body">
+                        <h3 class="media-heading media-heading-sm text-truncate">
+                            <a href="{{ topic.U_VIEW_TOPIC }}" class="topic-title{% if topic.S_UNREAD_TOPIC %} topic-title-unread{% endif %}">{{ topic.TOPIC_TITLE }}</a>
+                        </h3>
+                        <div class="media-subheading text-truncate">
+                            {% if topic.S_TOPIC_UNAPPROVED or topic.S_POSTS_UNAPPROVED %}<a href="{{ topic.U_MCP_QUEUE }}"><i class="icon icon-unapproved"></i></a>{% endif %}
+                            {% if topic.S_TOPIC_DELETED %}<a href="{{ topic.U_MCP_QUEUE }}"><i class="icon icon-topic-deleted"></i></a>{% endif %}
+                            {% if topic.S_TOPIC_REPORTED %}<a href="{{ topic.U_MCP_REPORT }}"><i class="icon icon-reported"></i></a>{% endif %}
+                            {% if topic.S_HAS_POLL %}<i class="icon icon-poll"></i>{% endif %}
+                            {% if topic.ATTACH_ICON_IMG %}<i class="icon icon-attachment"></i>{% endif %}
+                            {% if topic.REPLIES > 0 %}
+                                Most recent by {{ topic.LAST_POST_AUTHOR_FULL }} on {{ topic.FIRST_POST_TIME }}
+                            {% else %}
+                                Started by {{ topic.TOPIC_AUTHOR_FULL }} on {{ topic.LAST_POST_TIME }}
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-2 col-md-1">
+                <div class="media">
+                    {{ topic.REPLIES }}
+                </div>
+            </div>
+            <div class="col-xs-2 col-md-1">
+                <div class="media">
+                    {{ topic.VIEWS }}
+                </div>
+            </div>
+        </li>
+    {% else %}
+    	{% if S_IS_POSTABLE %}
+            <li class="alert alert-info" role="alert">
+                <strong>{L_NO_TOPICS}</strong>
+            </li>
+    	{% endif %}
+    {% endfor %}
+    </ul>
+
+    {% if loops.topicrow and not S_DISPLAY_ACTIVE %}
+        <div class="clearfix">
+            {% if not S_IS_BOT and S_DISPLAY_POST_INFO %}
+            <div class="btn-toolbar pull-left" role="toolbar">
+                <!-- EVENT viewforum_buttons_bottom_before -->
+                <div class="btn-group btn-group-sm">
+                    <a href="{{ U_POST_NEW_TOPIC }}" class="btn btn-default btn-subtle" title="{% if S_IS_LOCKED %}{L_FORUM_LOCKED}{% else %}{L_POST_TOPIC}{% endif %}">
+                        <i class="icon {% if S_IS_LOCKED %}icon-locked{% else %}icon-new{% endif %}"></i>
+                        <span class="hidden-xs">{% if S_IS_LOCKED %}{L_BUTTON_FORUM_LOCKED}{% else %}{L_BUTTON_NEW_TOPIC}{% endif %}</span>
+                    </a>
+                </div>
+                <!-- EVENT viewforum_buttons_bottom_after -->
+            </div>
+            {% endif %}
+
+            <div class="btn-toolbar pull-right" role="toolbar">
+                <div class="btn-group btn-group-sm">
+                {% if loops.pagination %}
+                    {% include 'includes/pagination.html.twig' %}
+                {% else %}
+                    {{ PAGE_NUMBER }}
+                {% endif %}
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+    {% if S_DISPLAY_ONLINE_LIST %}
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    {% if U_VIEWONLINE %}<a href="{{ U_VIEWONLINE }}">{L_WHO_IS_ONLINE}</a>{% else %}{L_WHO_IS_ONLINE}{% endif %}
+                </h3>
+            </div>
+            <div class="panel-body">
+                {{ LOGGED_IN_USER_LIST }}
+            </div>
+        </div>
+    {% endif %}
+
+    {% if S_DISPLAY_POST_INFO %}
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    {L_FORUM_PERMISSIONS}
+                </h3>
+            </div>
+            <div class="panel-body">
+                {% for rule in loops.rules %}
+                    {rule.RULE}<br />
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
+
+{% endblock %}

@@ -1,0 +1,43 @@
+//------------------------------------------------------------------------------
+// Notifications
+//------------------------------------------------------------------------------
+// Header notifications dropdown
+//------------------------------------------------------------------------------
+
+.notification {
+    width: 320px;
+    font-size: @font-size-small;
+    position: relative;
+
+    .media {
+        margin: 0;
+        padding: 5px;
+    }
+
+    .media-header-sm {
+        font-size: @font-size-small;
+    }
+}
+
+.notification-reference,
+.notification-forum,
+.notification-reason,
+.notification-time {
+    font-size: @font-size-small;
+    color: @text-color-light;
+}
+
+.notification-mark {
+    position: absolute;
+    bottom: 1em;
+    right: 0;
+
+    background-color: @gray-dark !important;
+    color: @gray-lighter !important;
+
+    padding: 5px 0 5px 5px;
+}
+
+.notification-unread {
+    background-color: @state-warning-bg;
+}

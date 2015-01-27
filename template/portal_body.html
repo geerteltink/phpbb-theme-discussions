@@ -1,0 +1,60 @@
+{% extends 'layout.html.twig' %}
+
+{% block content %}
+
+    <div class="row">
+        <div class="col-sm-8">
+            <h2>
+                <a href="{{ U_NEWS }}">News</a>
+            </h2>
+            {% for post in news_posts %}
+            <article class="media media-divider" itemscope itemtype="http://schema.org/NewsArticle">
+                <div class="media-object">
+                    <div class="media-date">
+                        <time class="media-date-day" datetime="{{ post.post_time_iso }}" itemprop="dateCreated">{{ post.post_day }}</time>
+                        <time class="media-date-month" datetime="{{ post.post_time_iso }}">{{ post.post_month }}</time>
+                    </div>
+                </div>
+                <div class="media-body">
+                    <h3 class="media-heading media-heading-sm">
+                        <a href="{{ post.topic_url }}" itemprop="url">
+                            <span itemprop="name">{{ post.post_title }}</span>
+                        </a>
+                    </h3>
+                    <div itemprop="articleBody">
+                        {{ post.post_text }}
+                    </div>
+                    <p class="pull-right">
+                        <a href="{{ post.topic_url }}">Read more</a>
+                    </p>
+                </div>
+            </article>
+            {% endfor %}
+        </div>
+        <div class="col-sm-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h2 class="panel-title">
+                        TeamSpeak
+                    </h2>
+                </div>
+                <div class="panel-body">
+                    <div id="ts3viewer_70786" style="width:; background-color:;">Teamspeak Viewer</div>
+                </div>
+                <script type="text/javascript" src="http://static.tsviewer.com/short_expire/js/ts3viewer_loader.js"></script>
+                <script type="text/javascript">
+                // <![CDATA[
+                    var ts3v_url_1 = "http://www.tsviewer.com/ts3viewer.php?ID=70786&text=000000&text_size=12&text_family=1&js=1&text_s_weight=bold&text_s_style=normal&text_s_variant=normal&text_s_decoration=none&text_s_color_h=525284&text_s_weight_h=bold&text_s_style_h=normal&text_s_variant_h=normal&text_s_decoration_h=underline&text_i_weight=normal&text_i_style=normal&text_i_variant=normal&text_i_decoration=none&text_i_color_h=525284&text_i_weight_h=normal&text_i_style_h=normal&text_i_variant_h=normal&text_i_decoration_h=underline&text_c_weight=normal&text_c_style=normal&text_c_variant=normal&text_c_decoration=none&text_c_color_h=525284&text_c_weight_h=normal&text_c_style_h=normal&text_c_variant_h=normal&text_c_decoration_h=underline&text_u_weight=bold&text_u_style=normal&text_u_variant=normal&text_u_decoration=none&text_u_color_h=525284&text_u_weight_h=bold&text_u_style_h=normal&text_u_variant_h=normal&text_u_decoration_h=none";
+                    ts3v_display.init(ts3v_url_1, 70786, 100);
+                // ]]>
+                </script>
+            </div>
+                <div>
+                    <a class="twitter-timeline" href="https://twitter.com/AvengersGC" data-widget-id="292944496042315777">Tweets van @AvengersGC</a>
+                    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

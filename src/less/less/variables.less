@@ -1,0 +1,156 @@
+//------------------------------------------------------------------------------
+// Defaults
+//------------------------------------------------------------------------------
+// Default variables used to establish the base framework
+//------------------------------------------------------------------------------
+
+// Used for versioning assets loaded by css
+@core-version:          '0.1.0';
+
+//------------------------------------------------------------------------------
+// Colors
+//------------------------------------------------------------------------------
+
+// Gray colors
+@gray-base:             #000;
+@gray-darker:           lighten(@gray-base, 13.5%); // #222
+@gray-dark:             lighten(@gray-base, 20%);   // #333
+@gray:                  lighten(@gray-base, 33.5%); // #555
+@gray-light:            lighten(@gray-base, 46.7%); // #777
+@gray-lighter:          lighten(@gray-base, 93.5%); // #eee
+@gray-lightest:         #f5f5f5;
+
+// Primary brand colors
+@brand-primary:         #0f538a;
+@brand-primary-alt:     lighten(@brand-primary, @lighten); // #47A1EB
+@brand-primary-accent:  darken(@brand-primary, @darken); // #0D4573
+@brand-primary-hover:   darken(spin(@brand-primary-alt, 138), @darken); // #E8305E
+
+// Secondary brand colors
+@brand-secondary:       desaturate(@brand-primary-alt, @saturation); // #709DC2
+@brand-secondary-alt:   lighten(@brand-secondary, @lighten); // #DBE7F0
+@brand-secondary-accent:darken(@brand-secondary-alt, @darken); // #C9DAE8
+@brand-secondary-hover: saturate(spin(@brand-secondary-alt, -150), @saturation); // #FAF8D1
+
+// Other brand colors
+@brand-success:         #5cb85c;
+@brand-info:            #5bc0de;
+@brand-warning:         #f0ad4e;
+@brand-danger:          #980002;
+
+// UI colors
+@ui:                    @gray-lightest; // #f5f5f5
+@ui-alt:                #bbbbbb;
+
+// Color tools
+@lighten:               30%;
+@darken:                5%;
+@saturation:            40%;
+
+
+//------------------------------------------------------------------------------
+// Typography
+//------------------------------------------------------------------------------
+
+// Font types
+@font-family-base:      "Helvetica Neue", Helvetica, Arial, sans-serif;
+// Default monospace fonts for `<code>`, `<kbd>`, and `<pre>`.
+@font-family-monospace: Menlo, Monaco, Consolas, "Courier New", monospace;
+
+// Base font size
+@font-size-base:        16px;
+@font-size-large:       ceil((@font-size-base * 1.25));
+@font-size-small:       ceil((@font-size-base * 0.85));
+
+@font-size-h1:          floor((@font-size-base * 2.6));
+@font-size-h2:          floor((@font-size-base * 2.15));
+@font-size-h3:          ceil((@font-size-base * 1.7));
+@font-size-h4:          ceil((@font-size-base * 1.25));
+@font-size-h5:          @font-size-base;
+@font-size-h6:          ceil((@font-size-base * 0.85));
+
+// Unit-less `line-height` for use in components like buttons.
+@line-height-base:      1.428571429;
+// Computed "line-height" (`font-size` * `line-height`) for use with `margin`, `padding`, etc.
+@line-height-computed:  floor((@font-size-base * @line-height-base));
+
+
+//------------------------------------------------------------------------------
+// Scaffolding
+//------------------------------------------------------------------------------
+
+//** Background color for `<body>`.
+@body-bg:               #fff;
+//** Global text color on `<body>`.
+@text-color:            @gray-dark;
+@text-color-light:      @gray-light;
+@text-color-lighter:    @gray-lighter;
+
+//** Global textual link color.
+@link-color:            @brand-primary;
+//** Link hover color set via `darken()` function.
+@link-hover-color:      darken(@link-color, 15%);
+//** Link hover decoration.
+@link-hover-decoration: underline;
+
+// Global text color on `<body>`.
+@footer-color:          #a0a0a0;
+@footer-bg:             #0c0c0c;
+
+// Margins
+@margin-base:           8px;
+@margin-sm:             @margin-base 0;
+@margin-md:             @margin-base 0 (@padding-base * 2) 0;
+@margin-lg:             (@padding-base * 2) 0;
+
+// Padding
+@padding-base:          8px;
+@padding-sm:            @padding-base;
+@padding-width:         @padding-base (@padding-base * 2);
+
+
+//------------------------------------------------------------------------------
+// Bootstrap specific settings
+//------------------------------------------------------------------------------
+
+// Rounded borders
+@border-radius-base:    2px;
+@border-radius-large:   2px;
+@border-radius-small:   2px;
+
+@border-color:          #d8d8d8;
+
+//** Blockquote font size
+@blockquote-font-size:  @font-size-base;
+
+// Panels
+@panel-body-padding:    @padding-sm;
+@panel-heading-padding: @padding-sm @padding-sm;
+@panel-footer-padding:  @panel-heading-padding;
+@panel-border-radius:   @border-radius-base;
+
+//== Grid system
+//
+//## Define your custom responsive grid.
+
+//** Number of columns in the grid.
+@grid-columns:          12;
+//** Padding between columns. Gets divided in half for the left and right.
+@grid-gutter-width:     (@padding-base * 2); // 16px
+// Navbar collapse
+//** Point at which the navbar becomes uncollapsed.
+@grid-float-breakpoint: @screen-sm-min;
+//** Point at which the navbar begins collapsing.
+@grid-float-breakpoint-max: (@grid-float-breakpoint - 1);
+
+
+//------------------------------------------------------------------------------
+// Icons
+//------------------------------------------------------------------------------
+
+@fa-font-path:          "../fonts";
+@fa-css-prefix:         icon;
+@fa-version:            @core-version;
+@fa-border-color:       #eee;
+@fa-inverse:            #fff;
+@fa-li-width:           (30em / 14);

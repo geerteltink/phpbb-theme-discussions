@@ -1,0 +1,28 @@
+<!-- EVENT quickreply_editor_panel_before -->
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<h3 class="panel-title">{L_QUICKREPLY}</h3>
+	</div>
+	<div class="panel-body">
+		<form method="post" action="{{ U_QR_ACTION }}" class="form-horizontal" role="form">
+			{{ S_FORM_TOKEN }}
+			{{ QR_HIDDEN_FIELDS }}
+			<div class="form-group">
+				<div class="input-group">
+				  	<span class="input-group-addon">{L_SUBJECT}{L_COLON}</span>
+				  	<input type="text" name="subject" value="{{ SUBJECT }}" class="form-control" placeholder="Optional subject" />
+				</div>
+			</div>
+			<!-- EVENT quickreply_editor_message_before -->
+			<div class="form-group">
+				<textarea name="message" rows="6" class="form-control" placeholder="Type your reply here and click submit..."></textarea>
+			</div>
+			<!-- EVENT quickreply_editor_message_after -->
+			<div class="form-group">
+				<button type="submit" name="post" value="{L_SUBMIT}" class="btn btn-danger">{L_SUBMIT}</button>
+				<button type="submit" name="preview" value="{L_FULL_EDITOR}" class="btn btn-default">{L_FULL_EDITOR}</button>
+			</div>
+		</form>
+	</div>
+</div>
+<!-- EVENT quickreply_editor_panel_after -->

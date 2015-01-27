@@ -1,0 +1,70 @@
+<ul class="list-inline header-nav-user" role="menu">
+{% if S_REGISTERED_USER %}
+    {% if S_NOTIFICATIONS_DISPLAY %}
+    <li class="dropdown">
+        <a href="{{ U_VIEW_ALL_NOTIFICATIONS }}" data-toggle="dropdown" role="menuitem">
+            <i class="icon icon-notification" title="{L_NOTIFICATIONS}"></i>
+            <span class="badge">{{ NOTIFICATIONS_COUNT }}</span>
+        </a>
+        {% include 'includes/notification_dropdown.html.twig' %}
+    </li>
+    {% endif %}
+
+    {% if S_DISPLAY_PM %}
+    <li>
+        <a href="{{ U_PRIVATEMSGS }}" role="menuitem">
+            <i class="icon icon-pm" title="{L_PRIVATE_MESSAGES}"></i>
+            <span class="badge">{{ PRIVATE_MESSAGE_COUNT }}</span>
+        </a>
+    </li>
+    {% endif %}
+
+    <!-- EVENT navbar_header_username_prepend -->
+    <li class="dropdown">
+        <a href="#" data-toggle="dropdown">
+            {% if CURRENT_USER_AVATAR %}<span class="avatar avatar-xs">{{ CURRENT_USER_AVATAR }}</span>{% endif %} {CURRENT_USERNAME_SIMPLE}
+            <span class="caret"></span>
+        </a>
+        <ul class="dropdown-menu dropdown-menu-right" role="menu">
+            {% if U_RESTORE_PERMISSIONS %}
+                <li><a href="{{ U_RESTORE_PERMISSIONS }}">{L_RESTORE_PERMISSIONS}</a></li>
+            {% endif %}
+            <!-- EVENT navbar_header_profile_list_before -->
+            <li role="presentation">
+                <a role="menuitem" tabindex="-1" href="{{ U_PROFILE }}">
+                    <i class="icon icon-fw icon-ucp"></i> Control panel
+                </a>
+            </li>
+            <li role="presentation">
+                <a role="menuitem" tabindex="-1" href="{{ U_USER_PROFILE }}">
+                    <i class="icon icon-fw icon-profile"></i> Profile
+                </a>
+            </li>
+            <!-- EVENT navbar_header_profile_list_after -->
+            <li role="presentation" class="divider"></li>
+            <li role="presentation">
+                <a role="menuitem" tabindex="-1" href="{{ U_LOGIN_LOGOUT }}">
+                    <i class="icon icon-fw icon-logout"></i> {L_LOGIN_LOGOUT}
+                </a>
+            </li>
+        </ul>
+    </li>
+    <!-- EVENT navbar_header_username_append -->
+
+{% else %}
+
+    <!-- EVENT navbar_header_logged_out_content -->
+    <li>
+        <a href="{U_LOGIN_LOGOUT}" title="{L_LOGIN_LOGOUT}" accesskey="x" role="menuitem">
+            <i class="icon icon-login"></i> {L_LOGIN_LOGOUT}
+        </a>
+    </li>
+    {% if S_REGISTER_ENABLED and not (S_SHOW_COPPA or S_REGISTRATION) %}
+        <li>
+            <a href="{{ U_REGISTER }}" role="menuitem">
+                <i class="icon icon-register"></i> {L_REGISTER}
+            </a>
+        </li>
+    {% endif %}
+{% endif %}
+</ul>

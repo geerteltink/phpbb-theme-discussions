@@ -1,0 +1,27 @@
+<form action="{{ S_LOGIN_ACTION }}" method="post" class="form-signin" role="form">
+    <h2 class="form-signin-heading">
+        <a href="{{ U_LOGIN_LOGOUT }}">{L_LOGIN_LOGOUT}</a>{% if S_REGISTER_ENABLED %}&nbsp; &bull; &nbsp;<a href="{{ U_REGISTER }}">{L_REGISTER}</a>{% endif %}
+    </h2>
+    <input type="text" class="form-control" name="{{ USERNAME_CREDENTIAL }}" placeholder="{L_USERNAME}" required="required" autofocus="autofocus" value="{{ USERNAME }}" />
+    <input type="password" name="{{ PASSWORD_CREDENTIAL }}" class="form-control" placeholder="{L_PASSWORD}" required="required" />
+    {% if S_AUTOLOGIN_ENABLED %}
+        <label class="checkbox">
+            <input type="checkbox" name="autologin" /> {L_LOG_ME_IN}
+        </label>
+    {% endif %}
+    {% if S_DISPLAY_FULL_LOGIN %}
+        <label class="checkbox">
+            <input type="checkbox" name="viewonline" /> {L_HIDE_ME}
+        </label>
+    {% endif %}
+    {% if CAPTCHA_TEMPLATE and S_CONFIRM_CODE %}
+        <!-- DEFINE $CAPTCHA_TAB_INDEX = 3 -->
+        {% include ['includes/', CAPTCHA_TEMPLATE, '.twig']|join %}
+    {% endif %}
+    <button type="submit" name="login" class="btn btn-lg btn-primary btn-block">{L_LOGIN}</button>
+    {S_LOGIN_REDIRECT}
+    {S_HIDDEN_FIELDS}
+    {% if not S_ADMIN_AUTH and PROVIDER_TEMPLATE_FILE %}
+        {% include ['includes/', PROVIDER_TEMPLATE_FILE, '.twig']|join %}
+    {% endif %}
+</form>

@@ -1,0 +1,48 @@
+{% if not S_IS_BOT and (U_WATCH_TOPIC or U_BOOKMARK_TOPIC or U_BUMP_TOPIC or U_EMAIL_TOPIC or U_PRINT_TOPIC or S_DISPLAY_TOPIC_TOOLS) %}
+    <div class="btn-group btn-group-sm">
+        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" title="{L_TOPIC_TOOLS}">
+            <i class="icon icon-tools"></i>
+            <span class="caret"></span>
+            <span class="sr-only">{L_TOPIC_TOOLS}</span>
+        </button>
+        <ul class="dropdown-menu">
+			<!-- EVENT viewtopic_topic_tools_before -->
+			{% if U_WATCH_TOPIC %}
+            <li>
+                <a href="{{ U_WATCH_TOPIC }}" title="{S_WATCH_TOPIC_TITLE}">
+                    <i class="icon icon-subscribe"></i> {S_WATCH_TOPIC_TITLE}
+                </a>
+            </li>
+            {% endif %}
+			{% if U_BOOKMARK_TOPIC %}
+            <li>
+                <a href="{{ U_BOOKMARK_TOPIC }}" title="{L_BOOKMARK_TOPIC}">
+                    <i class="icon icon-fw icon-bookmark"></i> {S_BOOKMARK_TOPIC}
+                </a>
+            </li>
+            {% endif %}
+			{% if U_BUMP_TOPIC %}
+            <li>
+                <a href="{{ U_BUMP_TOPIC }}" title="{L_BUMP_TOPIC}">
+                    <i class="icon icon-fw icon-bump"></i> {L_BUMP_TOPIC}
+                </a>
+            </li>
+            {% endif %}
+			{% if U_EMAIL_TOPIC %}
+            <li>
+                <a href="{{ U_EMAIL_TOPIC }}" title="{L_EMAIL_TOPIC}">
+                    <i class="icon icon-fw icon-email"></i> {L_EMAIL_TOPIC}
+                </a>
+            </li>
+            {% endif %}
+			{% if U_PRINT_TOPIC %}
+            <li>
+                <a href="{{ U_PRINT_TOPIC }}" title="{L_PRINT_TOPIC}">
+                    <i class="icon icon-fw icon-print"></i> {L_PRINT_TOPIC}
+                </a>
+            </li>
+            {% endif %}
+			<!-- EVENT viewtopic_topic_tools_after -->
+        </ul>
+    </div>
+{% endif %}

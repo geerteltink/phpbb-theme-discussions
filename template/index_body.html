@@ -1,0 +1,122 @@
+{% extends 'layout.html.twig' %}
+
+{% block content %}
+
+    <div class="clearfix">
+        {% if S_USER_LOGGED_IN %}<p class="pull-left">{{ CURRENT_TIME }}</p>{% endif %}
+        <p{% if S_USER_LOGGED_IN %} class="pull-right"{% endif %}>
+            {% if S_USER_LOGGED_IN %}{{ LAST_VISIT_DATE }}{% else %}{{ CURRENT_TIME }}{% endif %}
+        </p>
+    </div>
+
+    <!-- EVENT index_body_markforums_before -->
+    {% if U_MARK_FORUMS %}
+    <div class="clearfix">
+        <div class="btn-toolbar pull-right" role="toolbar">
+            <div class="btn-group btn-group-sm">
+                <a href="{{ U_MARK_FORUMS }}" class="btn btn-sm btn-default" title="{L_MARK_FORUMS_READ}">
+                    <i class="icon icon-mark"></i>
+                    <span class="hidden-xs">{L_MARK_FORUMS_READ}</span>
+                </a>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    <!-- EVENT index_body_markforums_after -->
+
+    {% include 'includes/forumlist_body.html.twig' %}
+
+    {% if not S_USER_LOGGED_IN and not S_IS_BOT %}
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    <a href="{{ U_LOGIN_LOGOUT }}">{L_LOGIN_LOGOUT}</a>{% if S_REGISTER_ENABLED %}&nbsp; &bull; &nbsp;<a href="{{ U_REGISTER }}">{L_REGISTER}</a>{% endif %}
+                </h3>
+            </div>
+            <div class="panel-body">
+                <form method="post" action="{{ S_LOGIN_ACTION }}" class="form-inline">
+                    {{ S_LOGIN_REDIRECT }}
+                    <div class="form-group">
+                        <label class="sr-only" for="exampleInputEmail2">{L_USERNAME}{L_COLON}</label>
+                        <input type="text" name="username" class="form-control" placeholder="{L_USERNAME}" />
+                    </div>
+                    <div class="form-group">
+                        <label class="sr-only" for="exampleInputEmail2">{L_PASSWORD}{L_COLON}</label>
+                        <input type="password" name="password" class="form-control" placeholder="{L_PASSWORD}" />
+                    </div>
+                    <button type="submit" name="login" class="btn btn-default">{L_LOGIN}</button>
+                    <br />
+                    {% if S_AUTOLOGIN_ENABLED %}
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" name="autologin" /> {L_LOG_ME_IN}
+                        </label>
+                    </div>
+                    {% endif %}
+                    {% if U_SEND_PASSWORD %}
+                        &nbsp;&bull;&nbsp; <a href="{{ U_SEND_PASSWORD }}">{L_FORGOT_PASS}</a>
+                    {% endif %}
+                </form>
+            </div>
+        </div>
+    {% endif %}
+
+    <!-- EVENT index_body_stat_blocks_before -->
+
+    {% if S_DISPLAY_ONLINE_LIST %}
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    {% if U_VIEWONLINE %}<a href="{{ U_VIEWONLINE }}">{L_WHO_IS_ONLINE}</a>{% else %}{L_WHO_IS_ONLINE}{% endif %}
+                </h3>
+            </div>
+            <div class="panel-body">
+                <!-- EVENT index_body_block_online_prepend -->
+                {{ TOTAL_USERS_ONLINE }} ({{ L_ONLINE_EXPLAIN }})<br />
+                {{ RECORD_USERS }}<br />
+                <br />
+                {{ LOGGED_IN_USER_LIST }}
+                {% if LEGEND %}<br /><em>{{ L_LEGEND }}{{ L_COLON }} {{ LEGEND }}</em>{% endif %}
+                <!-- EVENT index_body_block_online_append -->
+            </div>
+        </div>
+    {% endif %}
+
+    {% if S_DISPLAY_BIRTHDAY_LIST %}
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    {L_BIRTHDAYS}
+                </h3>
+            </div>
+            <div class="panel-body">
+                <!-- EVENT index_body_block_birthday_prepend -->
+                {% for birthday in loops.birthdays %}
+                    {% if loop.first %}{L_CONGRATULATIONS}{L_COLON}{% endif %}
+                    {birthday.USERNAME}{% if birthday.AGE %} ({{ birthday.AGE }}){% endif %}{% if not loop.last %}, {% endif %}
+                {% else %}
+                    {L_NO_BIRTHDAYS}
+                {% endfor %}
+                <!-- EVENT index_body_block_birthday_append -->
+            </div>
+        </div>
+    {% endif %}
+
+    {% if NEWEST_USER %}
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    {L_STATISTICS}
+                </h3>
+            </div>
+            <div class="panel-body">
+                <!-- EVENT index_body_block_stats_prepend -->
+                {{ TOTAL_POSTS }} &bull; {{ TOTAL_TOPICS }} &bull; {{ TOTAL_USERS }} &bull; {{ NEWEST_USER }}
+                <!-- EVENT index_body_block_stats_append -->
+            </div>
+        </div>
+    {% endif %}
+
+    <!-- EVENT index_body_stat_blocks_after -->
+
+{% endblock %}

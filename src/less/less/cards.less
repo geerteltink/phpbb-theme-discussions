@@ -1,0 +1,65 @@
+.card {
+    vertical-align: top;
+
+    background-color: #fff;
+    border: 1px solid @gray-lighter;
+    border-top-width: 0;
+    border-bottom-width: 0px;
+
+    border-radius: @border-radius-base;
+
+    margin: @margin-lg;
+    padding: 0;
+
+    box-shadow: inset 1px 1px 0 rgba(0,0,0,.1), inset 0 -1px 0 rgba(0,0,0,.07), 0 2px 1px rgba(0,0,0,.08);
+
+    .media {
+        overflow: visible;
+
+        .pull-left {
+            margin-right: 20px;
+        }
+
+        .media-body {
+            overflow: visible;
+        }
+    }
+}
+
+.card-heading {
+    padding: @padding-sm;
+    border-bottom: 1px solid @gray-lighter;
+}
+
+.card-heading-media {
+    padding: @padding-sm;
+}
+
+.card-heading-author {
+    color: @text-color;
+    font-weight: bold;
+    font-size: @font-size-large;
+}
+
+.card-heading-time {
+    color: @gray-light;
+    font-size: @font-size-base;
+}
+
+.card-body {
+    padding: @padding-sm;
+}
+
+.card-footer {
+    .clearfix();
+
+    padding: @padding-sm;
+    border-top: 1px solid @gray-lighter;
+    font-size: @font-size-small;
+
+    color: @gray-light;
+
+    a {
+        color: @gray-light;
+    }
+}

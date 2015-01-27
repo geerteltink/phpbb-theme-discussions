@@ -1,0 +1,35 @@
+//------------------------------------------------------------------------------
+// Topics
+//------------------------------------------------------------------------------
+// Forum topics related css
+//------------------------------------------------------------------------------
+
+.topic {
+    margin: 0 0 (@line-height-computed / 2);
+    padding: 0;
+
+    list-style: none;
+}
+
+.topic-header {
+    font-size: @font-size-small;
+    font-weight: bold;
+    padding: 15px 0;
+}
+
+.topic-header-subject {
+    padding-left: 42px;
+}
+
+.topic-item {
+    background: url('img/divider.png?v=@{core-version}') no-repeat 0 0;
+    padding: (@line-height-computed / 2) 0;
+}
+
+.topic-title-unread {
+    font-weight: bold;
+}
+
+.topic-body {
+    color: @gray-light;
+}

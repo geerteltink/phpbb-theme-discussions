@@ -1,0 +1,4 @@
+.widescreen(@width, @v-padding: 0, @h-padding: 0, @border: 0) {
+    width: floor(@width - ((@border + @h-padding) * 2));
+    height: floor(((@width / 16) * 9) - ((@border + @v-padding) * 2));
+}

@@ -1,0 +1,68 @@
+<ul itemscope itemtype="http://schema.org/SiteNavigationElement" class="list-inline header-nav-main js-flex-menu">
+    <li>
+        <a itemprop="url" href="{{ U_NEWS }}">
+            <i class="icon icon-news"></i> <span itemprop="name">News</span>
+        </a>
+    </li>
+
+    <li>
+        <a itemprop="url" href="{{ U_INDEX }}">
+            <i class="icon icon-forum"></i> <span itemprop="name">Discussions</span>
+        </a>
+        <ul class="menu-sub visible-print">
+            <!-- EVENT navbar_header_quick_links_before -->
+            {% if S_DISPLAY_SEARCH %}
+                <li class="separator"></li>
+                {% if S_REGISTERED_USER %}
+                    <li><a href="{{ U_SEARCH_SELF }}">{L_SEARCH_SELF}</a></li>
+                {% endif %}
+                {% if S_USER_LOGGED_IN %}
+                    <li><a href="{{ U_SEARCH_NEW }}">{L_SEARCH_NEW}</a></li>
+                {% endif %}
+                {% if S_LOAD_UNREADS %}
+                    <li><a href="{{ U_SEARCH_UNREAD }}">{L_SEARCH_UNREAD}</a></li>
+                {% endif %}
+                <li><a href="{{ U_SEARCH_UNANSWERED }}">{L_SEARCH_UNANSWERED}</a></li>
+                <li><a href="{{ U_SEARCH_ACTIVE_TOPICS }}">{L_SEARCH_ACTIVE_TOPICS}</a></li>
+                <li class="separator"></li>
+                <li><a itemprop="url" href="{{ U_SEARCH }}"><span itemprop="name">{L_SEARCH}</span></a></li>
+            {% endif %}
+
+            {% if not S_IS_BOT and (S_DISPLAY_MEMBERLIST or U_TEAM) %}
+                <li class="separator"></li>
+                {% if S_DISPLAY_MEMBERLIST %}
+                <li><a href="{{ U_MEMBERLIST }}">{L_MEMBERLIST}</a></li>
+                {% endif %}
+                {% if U_TEAM %}
+                <li><a href="{{ U_TEAM }}">{L_THE_TEAM}</a></li>
+                {% endif %}
+            {% endif %}
+            <li class="separator"></li>
+            <!-- EVENT navbar_header_quick_links_after -->
+        </ul>
+    </li>
+
+    <!-- EVENT overall_header_navigation_prepend -->
+    <li>
+        <a itemprop="url" href="{{ U_FAQ }}" rel="help" title="{L_FAQ_EXPLAIN}">
+            <i class="icon icon-faq"></i> <span itemprop="name">{L_FAQ}</span>
+        </a>
+    </li>
+    <!-- EVENT overall_header_navigation_append -->
+
+    {% if U_ACP %}
+    <li>
+        <a itemprop="url" href="{{ U_ACP }}" title="{L_ACP}">
+            <i class="icon icon-acp"></i> <span itemprop="name">{L_ACP_SHORT}</span>
+        </a>
+    </li>
+    {% endif %}
+
+    {% if U_MCP %}
+    <li>
+        <a itemprop="url" href="{{ U_MCP }}" title="{L_MCP}">
+            <i class="icon icon-mcp"></i> <span itemprop="name">{L_MCP_SHORT}</span>
+        </a>
+    </li>
+    {% endif %}
+</ul>

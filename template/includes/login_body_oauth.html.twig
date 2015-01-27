@@ -1,0 +1,8 @@
+<div class="content">
+	{% for oauth in loops.oauth %}
+	<dl>
+		<dt>&nbsp;</dt>
+		<dd><a href="{{ oauth.REDIRECT_URL }}" class="btn btn-default">{{ oauth.SERVICE_NAME }}</a></dd>
+	</dl>
+	{% endfor %}
+</div>

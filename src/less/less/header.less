@@ -1,0 +1,143 @@
+//------------------------------------------------------------------------------
+// Header
+//------------------------------------------------------------------------------
+// Top header related css
+//------------------------------------------------------------------------------
+
+.header {
+    position: relative;
+
+    min-height: 130px;
+
+    margin-bottom: 1em;
+}
+
+.header-container {
+    position: relative;
+}
+
+.header-dotted {
+    background: rgba(0,0,0,0.45) url('img/dot.png?v=@{core-version}') 0 0 repeat;
+    filter: alpha(opacity=0);
+
+    .transition(all 500ms ease-in-out);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+}
+
+.header-logo {
+    margin: 0;
+    padding: 10px;
+    color: #fff;
+    text-align: center;
+
+    a {
+        color: #fff;
+
+        &:hover {
+            text-decoration: none;
+        }
+    }
+}
+
+.header-nav {
+    margin: 0;
+    padding: 0;
+
+    li {
+        display: inline-block;
+        list-style-type: none;
+    }
+
+    a {
+        display: inline-block;
+        padding: 5px 10px;
+    }
+}
+
+.header-nav-main {
+    display: block;
+    overflow: hidden;
+    color: #fff;
+    text-align: center;
+    margin-bottom: 1em;
+
+    a {
+        display: inline-block;
+        padding: .25em 0.5em;
+        color: #fff;
+
+        &:hover {
+            background-color: rgba(255,255,255,0.1);
+            text-decoration: none;
+        }
+    }
+}
+
+.header-nav-user {
+    position: absolute;
+    right: 0;
+
+    ul {
+        margin: 0;
+        padding: 0;
+    }
+
+    a {
+        color: @text-color;
+    }
+
+    > ul > li > a {
+        .text-shadow(-1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff;);
+    }
+}
+
+
+
+
+
+
+.flexMenu-viewMore {
+    display: inline-block;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+
+    display: inline-block;
+}
+
+
+/*
+
+.flexMenu-popup {
+    padding: 0;
+    background-color: #088;
+    margin: 0;
+}
+
+.flexMenu-viewMore > a, .flexMenu-viewMore > a:hover {
+    background-color: #5599AA;
+}
+
+.flexMenu-viewMore > a:after {
+    display: inline-block;
+    content:"";
+    border-left:0.3em solid transparent;
+    border-right:0.3em solid transparent;
+    border-top:0.4em solid white;
+    margin-left:0.4em;
+    position: relative;
+    top: -.1em;
+}
+
+.flexMenu-viewMore.active > a, .flexMenu-viewMore.active > a:hover {
+    background-color: #088;
+}
+
+.flexMenu-popup > li > a, .flexMenu-popup > li {
+    display: block;
+}
+
+.flexMenu-popup > li > a:hover {
+    background-color: #3aa;
+}
+*/

@@ -1,0 +1,42 @@
+//------------------------------------------------------------------------------
+// Posts
+//------------------------------------------------------------------------------
+// Forum posts related css
+//------------------------------------------------------------------------------
+
+.post {
+    .clearfix();
+
+    margin: (@line-height-computed / 2) 0;
+    padding: (@line-height-computed / 2) 0 0 0;
+
+    background: url('img/divider.png?v=@{core-version}') no-repeat 0 0;
+}
+
+.post-header {
+    padding-bottom: (@line-height-computed / 2);
+}
+
+.post-header-title {
+    color: @text-color-light;
+}
+
+.post-header-actions {
+    @media (min-width: @screen-sm-min) {
+        text-align: right;
+    }
+}
+
+.post-body {
+    overflow: hidden;
+}
+
+.post-footer {
+    margin: (@line-height-computed / 2) 0;
+    font-size: @font-size-small;
+    color: @text-color-light;
+
+    img {
+        display: none;
+    }
+}

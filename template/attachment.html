@@ -1,0 +1,27 @@
+{% for file in loops._file %}
+	<div class="thumbnail" title="{{ file.DOWNLOAD_NAME }}">
+		<div class="thumbnail-fixed">
+			{% if file.S_THUMBNAIL %}
+				<a href="{{ file.U_DOWNLOAD_LINK }}">
+					<img src="{{ file.THUMB_IMAGE }}" alt="{{ file.DOWNLOAD_NAME }}" />
+				</a>
+			{% elseif file.S_IMAGE %}
+				<img src="{{ file.U_INLINE_LINK }}" alt="{{ file.DOWNLOAD_NAME }}" onclick="viewableArea(this);" />
+			{% elseif file.S_FILE %}
+				<a href="{{ file.U_DOWNLOAD_LINK }}">
+					<img src="/assets/img/placeholder.png" alt="placeholder" />
+				</a>
+			{% endif %}
+		</div>
+		<div class="caption">
+			{% if file.S_DENIED %}
+				<div class="text-overflow">[{{ file.DENIED_MESSAGE }}]</div>
+			{% else %}
+				{% if file.COMMENT %}<div class="text-truncate"><em>{{ file.COMMENT }}</em></div>{% endif %}
+				{% if file.S_FILE or file.S_IMAGE %}
+					<div class="text-truncate">({{ file.FILESIZE }} {{ file.SIZE_LANG }}) {{ file.L_DOWNLOAD_COUNT }}</div>
+				{% endif %}
+			{% endif %}
+		</div>
+	</div>
+{% endfor %}

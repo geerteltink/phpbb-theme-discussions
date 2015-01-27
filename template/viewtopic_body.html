@@ -1,0 +1,252 @@
+{% extends 'layout.html.twig' %}
+
+{% block content %}
+
+    <h2 class="post-title">{% EVENT viewtopic_topic_title_prepend %}<a href="{{ U_VIEW_TOPIC }}">{{ TOPIC_TITLE }}</a>{% EVENT viewtopic_topic_title_append %}</h2>
+    {% if FORUM_DESC %}<div style="display: none !important;">{{ FORUM_DESC }}<br /></div>{% endif %}
+
+    {% if MODERATORS %}
+    <p>
+    	<strong>{% if S_SINGLE_MODERATOR %}{L_MODERATOR}{% else %}{L_MODERATORS}{% endif %}{L_COLON}</strong> {{ MODERATORS }}
+    </p>
+    {% endif %}
+
+    <div class="clearfix">
+        <div class="btn-toolbar pull-left" role="toolbar">
+            {% EVENT viewtopic_buttons_top_before %}
+
+            {% if not S_IS_BOT and S_DISPLAY_POST_INFO %}
+            <div class="btn-group btn-group-sm">
+                <a href="{{ U_POST_REPLY_TOPIC }}" class="btn btn-default btn-subtle" title="{% if S_IS_LOCKED %}{L_TOPIC_LOCKED}{% else %}{L_POST_REPLY}{% endif %}">
+                    <i class="icon {% if S_IS_LOCKED %}icon-locked{% else %}icon-new{% endif %}"></i>
+                    <span class="hidden-xs">{% if S_IS_LOCKED %}{L_BUTTON_TOPIC_LOCKED}{% else %}{L_BUTTON_POST_REPLY}{% endif %}</span>
+                </a>
+            </div>
+            {% endif %}
+
+            {% EVENT viewtopic_buttons_top_after %}
+
+            {% if S_DISPLAY_SEARCHBOX %}
+            <div class="btn-group btn-group-sm">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" title="Search">
+                    <i class="icon icon-search"></i>
+                    <span class="caret"></span>
+                    <span class="sr-only">Search</span>
+                </button>
+                <div class="dropdown-menu dropdown-search js-keep-open" itemscope itemtype="http://schema.org/WebSite">
+                    <meta itemprop="url" content="{{ U_PORTAL }}" />
+                    <form method="get" action="{{ S_SEARCHBOX_ACTION }}" class="form-inline" itemprop="potentialAction" itemscope itemtype="http://schema.org/SearchAction">
+                        <meta itemprop="target" content="{{ U_PORTAL }}search.php?keywords={{ query }}" />
+                        <div class="input-group input-group-sm">
+                            <input type="search" name="keywords" id="search_keywords" class="form-control" placeholder="{L_SEARCH_FORUM}" itemprop="query-input">
+                            <div class="input-group-btn">
+                                <button type="submit" class="btn btn-default" title="{L_SEARCH}">
+                                    GO!
+                                </button>
+                                <a href="{{ U_SEARCH }}" class="btn btn-default" title="{L_SEARCH_ADV}">
+                                    <i class="icon icon-search-advanced"></i>
+                                </a>
+                            </div>
+                        </div>
+                        {{ S_SEARCH_LOCAL_HIDDEN_FIELDS }}
+                    </form>
+                </div>
+            </div>
+            {% endif %}
+
+            {% include 'includes/topic_tools.html.twig' %}
+        </div>
+
+        <div class="btn-toolbar pull-right" role="toolbar">
+            {% if not S_IS_BOT and U_MARK_TOPICS and loops.topicrow %}
+                <div class="btn-group btn-group-sm">
+                    <a href="{{ U_MARK_TOPICS }}" class="btn btn-sm btn-default" title="{L_MARK_TOPICS_READ}">
+                        <i class="icon icon-mark"></i>
+                        <span class="hidden-xs">{L_MARK_TOPICS_READ}</span>
+                    </a>
+                </div>
+            {% endif %}
+            <div class="btn-group btn-group-sm">
+            {% if loops.pagination %}
+                {% include 'includes/pagination.html.twig' %}
+            {% else %}
+                {{ PAGE_NUMBER }}
+            {% endif %}
+            </div>
+        </div>
+    </div>
+
+    {% if S_HAS_POLL %}
+        {% include 'includes/topic_poll.html.twig' %}
+    {% endif %}
+
+    {% for post in loops.postrow %}
+    	{% EVENT viewtopic_body_postrow_post_before %}
+    	{% if post.S_FIRST_UNREAD %}
+    		<a id="unread" class="anchor"{% if S_UNREAD_VIEW %} data-url="{post.U_MINI_POST}"{% endif %}></a>
+    	{% endif %}
+
+    	<article class="card" id="p{{ post.POST_ID }}" itemscope itemtype="http://schema.org/{% if post.POST_NUMBER > 1 %}Comment{% else %}Article{% endif %}">
+            <div class="media card-heading-media">
+                {# media-object media-object-sm media-circle #}
+                <div class="media-object media-object-sm media-object-circle">
+                    {% if post.POSTER_AVATAR %}{{ post.POSTER_AVATAR }}{% else %}<img src="{{ T_THEME_PATH }}/images/no_avatar.gif" alt="no avatar" />{% endif %}
+                </div>
+                <div class="media-body">
+                    <div class="pull-right">
+                        {% include 'includes/topic_post_actions.html.twig' %}
+                    </div>
+                    <h3 itemprop="name" class="hide">{{ post.POST_SUBJECT }}</h3>
+                    <div class="media-heading" itemprop="author">{{ post.POST_AUTHOR_FULL }}</div>
+                    {% if post.POSTER_WARNINGS %}<div class="profile-warnings"><strong>{L_WARNINGS}{L_COLON}</strong> {{ post.POSTER_WARNINGS }}</div>{% endif %}
+                    <time class="media-subheading" datetime="{{ post.POST_DATE }}" itemprop="dateCreated">{{ post.POST_DATE }}</time>
+                </div>
+            </div>
+    		<div class="card-body">
+    			{% if post.S_POST_HIDDEN %}
+    				{% if post.S_POST_DELETED %}
+    					<div class="ignore" id="post_hidden{{ post.POST_ID }}">
+    						{{ post.L_POST_DELETED_MESSAGE }}<br />
+    						{{ post.L_POST_DISPLAY }}
+    					</div>
+    				{% elseif post.S_IGNORE_POST %}
+    					<div class="ignore" id="post_hidden{{ post.POST_ID }}">
+    						{{ post.L_IGNORE_POST }}<br />
+    						{{ post.L_POST_DISPLAY }}
+    					</div>
+    				{% endif %}
+    			{% endif %}
+
+    			{% if post.S_POST_UNAPPROVED %}
+    			<form method="post" class="mcp_approve" action="{{ post.U_APPROVE_ACTION }}">
+    				<p class="post-notice post-notice-unapproved">
+    					<strong>{L_POST_UNAPPROVED_ACTION}</strong>
+    					<input class="button2" type="submit" value="{L_DISAPPROVE}" name="action[disapprove]" />
+    					<input class="button1" type="submit" value="{L_APPROVE}" name="action[approve]" />
+    					<input type="hidden" name="post_id_list[]" value="{{ post.POST_ID }}" />
+    					{{ S_FORM_TOKEN }}
+    				</p>
+    			</form>
+    			{% elseif post.S_POST_DELETED %}
+    			<form method="post" class="mcp_approve" action="{{ post.U_APPROVE_ACTION }}">
+    				<p class="post-notice post-notice-deleted">
+    					<strong>{L_POST_DELETED_ACTION}</strong>
+    					<input class="button2" type="submit" value="{L_DELETE}" name="action[disapprove]" />
+    					<input class="button1" type="submit" value="{L_RESTORE}" name="action[restore]" />
+    					<input type="hidden" name="post_id_list[]" value="{{ post.POST_ID }}" />
+    					{{ S_FORM_TOKEN }}
+    				</p>
+    			</form>
+    			{% endif %}
+
+    			{% if post.S_POST_REPORTED %}
+    			<p class="post-notice post-notice-reported">
+    				<a href="{{ post.U_MCP_REPORT }}"><strong>{L_POST_REPORTED}</strong></a>
+    			</p>
+    			{% endif %}
+
+    			<div class="post-content" itemprop="text">{{ post.MESSAGE }}</div>
+
+    			{% if post.S_HAS_ATTACHMENTS %}
+                <br />
+                <div class="row">
+			        {% for attachment in post.attachment %}
+					<div class="col-xs-6 col-sm-4 col-md-3">
+                        {{ attachment.DISPLAY_ATTACHMENT }}
+                    </div>
+				    {% endfor %}
+                </div>
+    			{% endif %}
+    		</div>
+    		<footer class="card-footer">
+                <div class="pull-right">
+                    <a href="#top"><i class="icon icon-top"></i> Top</a>
+                </div>
+    			{% EVENT viewtopic_body_postrow_post_notices_before %}
+    			{% if post.S_DISPLAY_NOTICE %}<div class="rules">{L_DOWNLOAD_NOTICE}</div>{% endif %}
+    			{% if post.DELETED_MESSAGE or post.DELETE_REASON %}
+    				<div class="card-footer-message">
+    					{{ post.DELETED_MESSAGE }}
+    					{% if post.DELETE_REASON %}<br /><strong>{L_REASON}{L_COLON}</strong> <em>{{ post.DELETE_REASON }}</em>{% endif %}
+    				</div>
+    			{% elseif post.EDITED_MESSAGE or post.EDIT_REASON %}
+    				<div class="card-footer-notice">
+    					{{ post.EDITED_MESSAGE }}
+    					{% if post.EDIT_REASON %}<br /><strong>{L_REASON}{L_COLON}</strong> <em>{{ post.EDIT_REASON }}</em>{% endif %}
+    				</div>
+    			{% endif %}
+    			{% if post.BUMPED_MESSAGE %}<div class="card-footer-notice"><br /><br />{{ post.BUMPED_MESSAGE }}</div>{% endif %}
+    			{% EVENT viewtopic_body_postrow_post_notices_after %}
+    			{% if post.SIGNATURE %}<div id="sig{{ post.POST_ID }}" class="card-footer-signature">{{ post.SIGNATURE }}</div>{% endif %}
+
+    			{% EVENT viewtopic_body_postrow_post_content_footer %}
+    		</footer>
+        </article>
+
+    	{% EVENT viewtopic_body_postrow_post_after %}
+    {% endfor %}
+
+    {% EVENT viewtopic_body_topic_actions_before %}
+    <div class="clearfix">
+        <div class="btn-toolbar pull-left" role="toolbar">
+            {% EVENT viewtopic_buttons_bottom_before %}
+
+            {% if not S_IS_BOT and S_DISPLAY_POST_INFO %}
+            <div class="btn-group btn-group-sm">
+                <a href="{{ U_POST_REPLY_TOPIC }}" class="btn btn-default btn-subtle" title="{% if S_IS_LOCKED %}{L_TOPIC_LOCKED}{% else %}{L_POST_REPLY}{% endif %}">
+                    <i class="icon {% if S_IS_LOCKED %}icon-lock{% else %}icon-new{% endif %}"></i>
+                    <span class="hidden-xs">{% if S_IS_LOCKED %}{L_BUTTON_TOPIC_LOCKED}{% else %}{L_BUTTON_POST_REPLY}{% endif %}</span>
+                </a>
+            </div>
+            {% endif %}
+
+            {% EVENT viewtopic_buttons_bottom_after %}
+
+            {% include 'includes/topic_tools.html.twig' %}
+
+    		{% if loops.quickmod %}
+                <div class="btn-group btn-group-sm">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" title="{L_QUICK_MOD}">
+                        <i class="icon icon-mod"></i>
+                        <span class="caret"></span>
+                        <span class="sr-only">{L_QUICK_MOD}</span>
+                    </button>
+                    <ul class="dropdown-menu">
+    				{% for quickmod in loops.quickmod %}
+    					<li><a href="{{ quickmod.LINK }}">{{ quickmod.TITLE }}</a></li>
+    				{% endfor %}
+                    </ul>
+                </div>
+    		{% endif %}
+        </div>
+
+        <div class="btn-toolbar pull-right" role="toolbar">
+            <div class="btn-group btn-group-sm">
+            {% if loops.pagination %}
+                {% include 'includes/pagination.html.twig' %}
+            {% else %}
+                {{ PAGE_NUMBER }}
+            {% endif %}
+            </div>
+        </div>
+    </div>
+    {% EVENT viewtopic_body_footer_before %}
+
+    {% if S_QUICK_REPLY %}
+        {% include 'includes/quickreply_editor.html.twig' %}
+    {% endif %}
+
+    {% if S_DISPLAY_ONLINE_LIST %}
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    {% if U_VIEWONLINE %}<a href="{{ U_VIEWONLINE }}">{L_WHO_IS_ONLINE}</a>{% else %}{L_WHO_IS_ONLINE}{% endif %}
+                </h3>
+            </div>
+            <div class="panel-body">
+                {{ LOGGED_IN_USER_LIST }}
+            </div>
+        </div>
+    {% endif %}
+
+{% endblock %}

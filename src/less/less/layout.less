@@ -1,0 +1,24 @@
+
+body {
+    color: @text-color;
+    background: @body-bg;
+}
+
+.header {
+    padding-bottom: 1px;
+    margin-bottom: (@line-height-computed);
+
+    background: #980002 url('img/bg_head.jpg?v=@{core-version}') repeat-x 50% 100%;
+}
+
+.footer {
+    color: @footer-color;
+    background-color: @footer-bg;
+    padding: (@line-height-computed) 0;
+
+    a,
+    .breadcrumbs,
+    .linklist {
+        color: @footer-color;
+    }
+}

@@ -1,0 +1,34 @@
+{% for forum in loops.forumrow %}
+	{% if forum.S_IS_CAT %}
+        <!-- EVENT forumlist_body_category_header_before -->
+        <div class="forum forum-category">
+            <a href="{{ forum.U_VIEWFORUM }}">
+                <h2 class="forum-header forum-header-category">
+                    {{ forum.FORUM_NAME }}
+                </h2>
+            </a>
+        </div>
+        <!-- EVENT forumlist_body_category_header_after -->
+	{% else %}
+		<!-- EVENT forumlist_body_forum_row_before -->
+        <div class="forum {% if forum.S_UNREAD_FORUM %}forum-unread{% endif %}">
+            <a href="{{ forum.U_VIEWFORUM }}">
+                <div class="forum-icon"><i class="icon icon-forum"></i></div>
+                <h3 class="forum-header">{{ forum.FORUM_NAME }}</h3>
+                <div class="forum-description">
+                    {% if forum.FORUM_DESC %}
+                        <i class="icon icon-left forum-divider"></i>
+                        {{ forum.FORUM_DESC }}
+                        <i class="icon icon-right forum-divider"></i>
+                    {% endif %}
+                </div>
+            </a>
+        </div>
+        <!-- EVENT forumlist_body_forum_row_after -->
+	{% endif %}
+
+{% else %}
+    <div class="alert alert-info" role="alert">
+        <strong>{L_NO_FORUMS}</strong>
+    </div>
+{% endfor %}

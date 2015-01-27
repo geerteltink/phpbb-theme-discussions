@@ -1,0 +1,54 @@
+<div class="btn-group btn-group-xs">
+    <a class="btn btn-default" href="#p{{ post.POST_ID }}" itemporp="sameAs">
+        <i class="icon icon-url"></i>
+    </a>
+    {% if post.U_QUOTE %}
+    <a class="btn btn-default" href="{{ post.U_QUOTE }}" title="{L_REPLY_WITH_QUOTE}">
+        <i class="icon icon-quote"></i>
+    </a>
+    {% endif %}
+    {% if post.U_EDIT or post.U_DELETE or post.U_REPORT or post.U_WARN or post.U_INFO %}
+    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+        <i class="icon icon-menu"></i>
+    </button>
+    <ul class="dropdown-menu dropdown-menu-right">
+        <!-- EVENT viewtopic_body_post_buttons_before -->
+        {% if post.U_EDIT %}
+            <li>
+                <a href="{{ post.U_EDIT }}" title="{L_EDIT_POST}">
+                    <i class="icon icon-fw icon-edit"></i> {L_EDIT_POST}
+                </a>
+            </li>
+        {% endif %}
+        {% if post.U_DELETE %}
+            <li>
+                <a href="{{ post.U_DELETE }}" title="{L_DELETE_POST}">
+                    <i class="icon icon-fw icon-delete"></i> {L_DELETE_POST}
+                </a>
+            </li>
+        {% endif %}
+        {% if post.U_REPORT %}
+            <li>
+                <a href="{{ post.U_REPORT }}" title="{L_REPORT_POST}">
+                    <i class="icon icon-fw icon-report"></i> {L_REPORT_POST}
+                </a>
+            </li>
+        {% endif %}
+        {% if post.U_WARN %}
+            <li>
+                <a href="{{ post.U_WARN }}" title="{L_WARN_USER}">
+                    <i class="icon icon-fw icon-warn"></i> {L_WARN_USER}
+                </a>
+            </li>
+        {% endif %}
+        {% if post.U_INFO %}
+            <li>
+                <a href="{{ post.U_INFO }}" title="{L_INFORMATION}">
+                    <i class="icon icon-fw icon-info"></i> {L_INFORMATION}
+                </a>
+            </li>
+        {% endif %}
+        <!-- EVENT viewtopic_body_post_buttons_after -->
+    </ul>
+    {% endif %}
+</div>

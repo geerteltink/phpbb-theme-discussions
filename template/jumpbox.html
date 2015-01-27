@@ -1,0 +1,9 @@
+{% if S_VIEWTOPIC %}
+	<p class="jumpbox-return"><a href="{{ U_VIEW_FORUM }}" class="left-box arrow-{{ S_CONTENT_FLOW_BEGIN }}" accesskey="r">{L_RETURN_TO_FORUM}</a></p>
+{% elseif S_VIEWFORUM %}
+	<p class="jumpbox-return"><a href="{{ U_INDEX }}" class="left-box arrow-{{ S_CONTENT_FLOW_BEGIN }}" accesskey="r">{L_RETURN_TO_INDEX}</a></p>
+{% elseif SEARCH_TOPIC %}
+	<p class="jumpbox-return"><a class="left-box arrow-{{ S_CONTENT_FLOW_BEGIN }}" href="{{ U_SEARCH_TOPIC }}" accesskey="r">{L_RETURN_TO_TOPIC}</a></p>
+{% elseif S_SEARCH_ACTION %}
+	<p class="jumpbox-return"><a class="left-box arrow-{{ S_CONTENT_FLOW_BEGIN }}" href="{{ U_SEARCH }}" title="{L_SEARCH_ADV}" accesskey="r">{L_GO_TO_SEARCH_ADV}</a></p>
+{% endif %}

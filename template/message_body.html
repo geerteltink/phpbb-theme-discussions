@@ -1,0 +1,13 @@
+{% extends S_SIMPLE_MESSAGE ? 'layout_simple.html.twig' : 'layout.html.twig' %}
+
+{% block content %}
+
+    <div class="alert alert-success" role="alert">
+        <h2>{{ MESSAGE_TITLE }}</h2>
+        <p>{{ MESSAGE_TEXT }}</p>
+        {% if SCRIPT_NAME == 'search' and not S_BOARD_DISABLED and not S_NO_SEARCH and lang('RETURN_TO_SEARCH_ADV') %}
+        <p><a href="{{ U_SEARCH }}">{L_GO_TO_SEARCH_ADV}</a></p>
+        {% endif %}
+    </div>
+
+{% endblock %}

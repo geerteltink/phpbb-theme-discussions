@@ -1,0 +1,43 @@
+{% extends 'layout.html.twig' %}
+
+{% block content %}
+
+    {% if LOGIN_ERROR %}
+    	<div class="alert alert-danger" role="alert">
+    		{{ LOGIN_ERROR }}
+    	</div>
+    {% endif %}
+
+    {% if LOGIN_EXPLAIN %}
+    	<div class="alert alert-info" role="alert">
+    		{{ LOGIN_EXPLAIN }}
+    	</div>
+    {% endif %}
+
+    {% include 'includes/login_form.html.twig' %}
+
+    {% if S_DISPLAY_FULL_LOGIN and (U_SEND_PASSWORD or U_RESEND_ACTIVATION) %}
+    	<div class="text-center">
+    		{% if U_SEND_PASSWORD %}<a href="{{ U_SEND_PASSWORD }}">{L_FORGOT_PASS}</a> &nbsp;&bull;&nbsp;{% endif %}
+    		{% if U_RESEND_ACTIVATION %}<a href="{{ U_RESEND_ACTIVATION }}">{L_RESEND_ACTIVATION}</a>{% endif %}
+    	</div>
+    {% endif %}
+
+    {% if not S_ADMIN_AUTH and S_REGISTER_ENABLED %}
+        <br />
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    <a href="{{ U_REGISTER }}" class="button2">{L_REGISTER}</a>
+                </h3>
+            </div>
+            <div class="panel-body">
+                {L_LOGIN_INFO}
+            </div>
+            <div class="panel-footer">
+                <a href="{{ U_REGISTER }}" class="button2">{L_REGISTER}</a> | <a href="{{ U_TERMS_USE }}">{L_TERMS_USE}</a> | <a href="{{ U_PRIVACY }}">{L_PRIVACY}</a>
+            </div>
+        </div>
+    {% endif %}
+
+{% endblock %}

@@ -1,0 +1,33 @@
+{% if S_INDEX or S_VIEWFORUM or S_VIEWTOPIC or loops.navlinks %}
+
+    <!-- EVENT overall_header_breadcrumbs_before -->
+    <ol class="breadcrumb" itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
+        {% if U_PORTAL or U_SITE_HOME %}
+        <li>
+            <a href="{% if U_PORTAL %}{{ U_PORTAL }}{% elseif U_SITE_HOME %}{{ U_SITE_HOME }}{% endif %}" itemprop="url">
+                <span itemprop="title">{% if L_SITE_HOME %}{L_SITE_HOME}{% else %}{{ SITENAME }}{% endif %}</span>
+            </a>
+        </li>
+        {% endif %}
+
+        <!-- EVENT overall_header_breadcrumb_prepend -->
+
+        {% if S_INDEX or S_VIEWFORUM or S_VIEWTOPIC %}
+        <li itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
+            <a href="{{ U_INDEX }}" itemprop="url"><span itemprop="title">{L_INDEX}</span></a>
+        </li>
+        {% endif %}
+
+        {% for link in loops.navlinks %}
+        <!-- EVENT overall_header_navlink_prepend -->
+        <li itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
+            <a href="{{ link.U_VIEW_FORUM }}" itemprop="url"><span itemprop="title">{{ link.FORUM_NAME }}</span></a>
+        </li>
+        <!-- EVENT overall_header_navlink_append -->
+        {% endfor %}
+
+        <!-- EVENT overall_header_breadcrumb_append -->
+    </ol>
+    <!-- EVENT overall_header_breadcrumbs_after -->
+
+{% endif %}

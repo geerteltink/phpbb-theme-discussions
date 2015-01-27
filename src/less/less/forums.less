@@ -1,0 +1,85 @@
+//------------------------------------------------------------------------------
+// Forum
+//------------------------------------------------------------------------------
+// Forum related css
+//------------------------------------------------------------------------------
+
+.forum {
+    .text-overflow();
+
+    padding: 10px 0;
+    color: @text-color;
+
+    a {
+        color: @text-color;
+        text-decoration: none;
+
+        &:hover {
+            text-decoration: none;
+
+            .forum-header {
+                text-decoration: underline;
+            }
+        }
+    }
+}
+
+.forum-category {
+    margin-top: (@line-height-computed / 2);
+    padding: (@line-height-computed / 2) 0 0 @font-size-h4;
+
+    background: url('img/divider.png?v=@{core-version}') no-repeat 0 0;
+}
+
+.forum-icon {
+    display: block;
+    float: left;
+    overflow: hidden;
+
+    width: @font-size-h4;
+    height: @font-size-h4;
+
+    font-size: @font-size-h5;
+    text-align: center;
+
+    color: @text-color-light;
+}
+
+.forum-header {
+    font-size: @font-size-h4;
+
+    display: inline;
+
+    margin-left: 10px;
+}
+
+.forum-header-category {
+    font-size: @font-size-h3;
+}
+
+.forum-divider {
+    color: @brand-danger;
+}
+
+.forum-description {
+    font-size: @font-size-small;
+
+    display: inline;
+
+    padding-left: 10px;
+
+    white-space: nowrap;
+
+    color: @text-color-light;
+}
+
+.forum-unread {
+
+    .forum-icon {
+        color: @brand-danger;
+    }
+
+    .forum-header {
+        font-weight: bold;
+    }
+}

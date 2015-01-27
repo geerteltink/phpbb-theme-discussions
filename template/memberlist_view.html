@@ -1,0 +1,135 @@
+{% extends 'layout.html.twig' %}
+
+{% block content %}
+
+	{% EVENT memberlist_view_content_prepend %}
+
+	<div class="card">
+		<div class="media">
+		    <div class="media-object media-object-lg media-object-circle">
+		       	{% if AVATAR_IMG %}{{ AVATAR_IMG }}{% else %}<img src="{{ T_THEME_PATH }}/img/no_avatar.gif" alt="no avatar" />{% endif %}
+		    </div>
+			<div class="media-body">
+				<ul class="list-inline pull-right">
+					{% if U_EDIT_SELF %}<li><a href="{{ U_EDIT_SELF }}" class="btn btn-default btn-sm" title="{L_EDIT_PROFILE}"><i class="icon icon-edit icon-fw icon-border"></i></a></li>{% endif %}
+					{% if U_USER_ADMIN %}<li><a href="{{ U_USER_ADMIN }}" class="btn btn-default btn-sm" title="{L_USER_ADMIN}"><i class="icon icon-acp icon-fw icon-border"></i></a></li>{% endif %}
+					{% if U_USER_BAN %}<li><a href="{{ U_USER_BAN }}" class="btn btn-default btn-sm" title="{L_USER_BAN}"><i class="icon icon-mod icon-fw icon-border"></i></a></li>{% endif %}
+					{% if U_SWITCH_PERMISSIONS %}<li><a href="{{ U_SWITCH_PERMISSIONS }}" class="btn btn-default btn-sm" title="{L_USE_PERMISSIONS}"><i class="icon icon-tools icon-fw icon-border"></i></a></li>{% endif %}
+				</ul>
+				<h2 class="media-heading">
+					<span style="{% if USER_COLOR %}color:{{ USER_COLOR }}; {% endif %}font-weight:bold;">{{ USERNAME }}</span>
+					<br /><small>{L_LAST_ACTIVE}{L_COLON} {{ LAST_ACTIVE }}</small>
+				</h2>
+				<br />
+				<div>
+					{% if U_EMAIL %}
+						<a href="{{ U_EMAIL }}" title="{L_SEND_EMAIL_USER}">
+							<span class="icon-stack icon-lg">
+							  	<i class="icon icon-circle icon-stack-2x"></i>
+							  	<i class="icon icon-social-email icon-stack-1x icon-inverse"></i>
+							</span>
+						</a>
+					{% endif %}
+					{% if U_PM %}
+						<a href="{{ U_PM }}" title="{L_SEND_PRIVATE_MESSAGE}">
+							<span class="icon-stack icon-lg">
+							  	<i class="icon icon-circle icon-stack-2x"></i>
+							  	<i class="icon icon-social-pm icon-stack-1x icon-inverse"></i>
+							</span>
+						</a>
+					{% endif %}
+					{% if U_JABBER and S_JABBER_ENABLED %}
+						<a href="{{ U_JABBER }}" title="{L_JABBER}" onclick="popup(this.href, 750, 320); return false;">
+							<span class="icon-stack icon-lg">
+							  	<i class="icon icon-circle icon-stack-2x"></i>
+							  	<i class="icon icon-social-pm icon-stack-1x icon-inverse"></i>
+							</span>
+						</a>
+					{% endif %}
+					{% for field in loops.field %}
+						{% if field.S_PROFILE_CONTACT %}
+							<a href="{{ field.PROFILE_FIELD_CONTACT }}" title="{{ field.PROFILE_FIELD_DESC }}">
+								<span class="icon-stack icon-lg">
+								  	<i class="icon icon-circle icon-stack-2x"></i>
+								  	{% if field.PROFILE_FIELD_NAME == 'Facebook' %}
+								  	<i class="icon icon-social-facebook icon-stack-1x icon-inverse"></i>
+								  	{% elseif field.PROFILE_FIELD_NAME == 'Twitter' %}
+								  	<i class="icon icon-social-twitter icon-stack-1x icon-inverse"></i>
+								  	{% elseif field.PROFILE_FIELD_NAME == 'Google+' %}
+									<i class="icon icon-social-google-plus icon-stack-1x icon-inverse"></i>
+								  	{% elseif field.PROFILE_FIELD_NAME == 'YouTube' %}
+									<i class="icon icon-social-youtube icon-stack-1x icon-inverse"></i>
+								  	{% elseif field.PROFILE_FIELD_NAME == 'Yahoo' %}
+									<i class="icon icon-social-yahoo icon-stack-1x icon-inverse"></i>
+								  	{% elseif field.PROFILE_FIELD_NAME == 'Skype' %}
+									<i class="icon icon-social-skype icon-stack-1x icon-inverse"></i>
+								  	{% elseif field.PROFILE_FIELD_NAME == 'WWW' %}
+									<i class="icon icon-social-www icon-stack-1x icon-inverse"></i>
+								  	{% else %}
+									<i class="icon icon-social-contact icon-stack-1x icon-inverse"></i>
+								  	{% endif %}
+								</span>
+							</a>
+						{% endif %}
+					{% endfor %}
+				</div>
+			</div>
+		</div>
+	</div>
+
+	{% if SIGNATURE %}
+	<div class="nocard">
+		<div class="ccard-content">
+			<blockquote>
+				{{ SIGNATURE }}
+			</blockquote>
+		</div>
+	</div>
+	{% endif %}
+
+	<div class="card">
+		<div class="card-content">
+			{% EVENT memberlist_view_contact_before %}
+			<div class="row">
+				<div class="col-sm-6">
+					<div class="card-heading">
+						<h3>Details</h3>
+					</div>
+					<div class="card-body">
+						{% if RANK_TITLE %}<dl><dt>{L_RANK}{L_COLON}</dt> <dd>{{ RANK_TITLE }}</dd></dl>{% endif %}
+						{% if S_USER_INACTIVE %}<dl><dt>{L_USER_IS_INACTIVE}{L_COLON}</dt> <dd>{{ USER_INACTIVE_REASON }}</dd></dl>{% endif %}
+						{% if AGE !== '' %}<dl><dt>{L_AGE}{L_COLON}</dt> <dd>{{ AGE }}</dd></dl>{% endif %}
+						{% for field in loops.field %}
+							{% if not field.S_PROFILE_CONTACT %}
+								<dl><dt>{{ field.PROFILE_FIELD_NAME }}{L_COLON}</dt> <dd>{{ field.PROFILE_FIELD_VALUE }}</dd></dl>
+							{% endif %}
+						{% endfor %}
+					</div>
+				</div>
+				<div class="col-sm-6">
+					<div class="card-heading">
+						<h3>Statistics</h3>
+					</div>
+					<div class="card-body">
+						<dl><dt>{L_JOINED}{L_COLON}</dt> <dd>{{ JOINED }}</dd></dl>
+						{% if S_WARNINGS %}
+							<dl><dt>{L_WARNINGS}{L_COLON}</dt>
+							<dd><strong>{{ WARNINGS }}</strong>{% if U_NOTES or U_WARN %} [ {% if U_NOTES %}<a href="{{ U_NOTES }}">{L_VIEW_NOTES}</a>{% endif %} {% if U_WARN %}{% if U_NOTES %} | {% endif %}<a href="{{ U_WARN }}">{L_WARN_USER}</a>{% endif %} ]{% endif %}</dd></dl>
+						{% endif %}
+						<dl><dt>{L_TOTAL_POSTS}{L_COLON}</dt>
+						<dd>{{ POSTS }} {% if S_DISPLAY_SEARCH %}| <strong><a href="{{ U_SEARCH_USER }}">{L_SEARCH_USER_POSTS}</a></strong>{% endif %}
+							{% if POSTS_PCT %}<br />({{ POSTS_PCT }} / {{ POSTS_DAY }}){% endif %}
+							{% if POSTS_IN_QUEUE and U_MCP_QUEUE %}<br />(<a href="{{ U_MCP_QUEUE }}">{L_POSTS_IN_QUEUE}</a>){% elseif POSTS_IN_QUEUE %}<br />({L_POSTS_IN_QUEUE}){% endif %}
+						</dd></dl>
+						{% if S_SHOW_ACTIVITY and POSTS %}
+							<dl><dt>{L_ACTIVE_IN_FORUM}{L_COLON}</dt> <dd>{% if ACTIVE_FORUM != '' %}<strong><a href="{{ U_ACTIVE_FORUM }}">{{ ACTIVE_FORUM }}</a></strong><br />({{ ACTIVE_FORUM_POSTS }} / {{ ACTIVE_FORUM_PCT }}){% else %} - {% endif %}</dd></dl>
+							<dl><dt>{L_ACTIVE_IN_TOPIC}{L_COLON}</dt> <dd>{% if ACTIVE_TOPIC != '' %}<strong><a href="{{ U_ACTIVE_TOPIC }}">{{ ACTIVE_TOPIC }}</a></strong><br />({{ ACTIVE_TOPIC_POSTS }} / {{ ACTIVE_TOPIC_PCT }}){% else %} - {% endif %}</dd></dl>
+						{% endif %}
+					</div>
+				</div>
+			</div>
+			{% EVENT memberlist_view_content_append %}
+		</div>
+	</div>
+
+{% endblock %}
