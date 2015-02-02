@@ -1,31 +1,51 @@
 {% for forum in loops.forumrow %}
-	{% if forum.S_IS_CAT %}
-        <!-- EVENT forumlist_body_category_header_before -->
-        <div class="forum forum-category">
-            <a href="{{ forum.U_VIEWFORUM }}">
-                <h2 class="forum-header forum-header-category">
-                    {{ forum.FORUM_NAME }}
+
+    {% if forum.S_FIRST_ROW and not forum.S_IS_CAT %}
+        <div class="panel panel-primary">
+            <!-- EVENT forumlist_body_category_header_before -->
+            <div class="panel-heading">
+                <h2 class="panel-title">
+                    Forum
                 </h2>
-            </a>
+            </div>
+            <!-- EVENT forumlist_body_category_header_after -->
+            <div class="list-group">
+    {% endif %}
+
+    {% if forum.S_IS_CAT %}
+        {% if not forum.S_FIRST_ROW %}
+            </div>
         </div>
-        <!-- EVENT forumlist_body_category_header_after -->
+        {% endif %}
+        <div class="panel panel-primary">
+            <!-- EVENT forumlist_body_category_header_before -->
+            <div class="panel-heading">
+                <h2 class="panel-title">
+                    <a href="{{ forum.U_VIEWFORUM }}" style="display: block;">{{ forum.FORUM_NAME }}</a>
+                </h2>
+            </div>
+            <!-- EVENT forumlist_body_category_header_after -->
+            <div class="list-group">
 	{% else %}
 		<!-- EVENT forumlist_body_forum_row_before -->
-        <div class="forum {% if forum.S_UNREAD_FORUM %}forum-unread{% endif %}">
-            <a href="{{ forum.U_VIEWFORUM }}">
-                <div class="forum-icon"><i class="icon icon-forum"></i></div>
-                <h3 class="forum-header">{{ forum.FORUM_NAME }}</h3>
-                <div class="forum-description">
-                    {% if forum.FORUM_DESC %}
-                        <i class="icon icon-left forum-divider"></i>
-                        {{ forum.FORUM_DESC }}
-                        <i class="icon icon-right forum-divider"></i>
-                    {% endif %}
+        <a href="{{ forum.U_VIEWFORUM }}" class="list-group-item forum {% if forum.S_UNREAD_FORUM %}forum-unread{% endif %}">
+            <h3 class="list-group-item-heading">
+                <i class="icon icon-forum"></i>
+                {{ forum.FORUM_NAME }}
+            </h3>
+            {% if forum.FORUM_DESC %}
+                <div class="list-group-item-text">
+                    {{ forum.FORUM_DESC }}
                 </div>
-            </a>
-        </div>
+            {% endif %}
+        </a>
         <!-- EVENT forumlist_body_forum_row_after -->
 	{% endif %}
+
+    {% if forum.S_LAST_ROW %}
+        </div>
+    </div>
+    {% endif %}
 
 {% else %}
     <div class="alert alert-info" role="alert">
