@@ -108,71 +108,69 @@
     	{% endif %}
     {% endif %}
 
-    <ul class="topic">
     {% for topic in loops.topicrow  %}
     	{% if loop.first %}
-            <li class="row topic-header">
-                <div class="col-xs-8 col-md-10">
-                    <div class="topic-header-subject">Subject</div>
-                </div>
-                <div class="col-xs-2 col-md-1">
-                    Replies
-                </div>
-                <div class="col-xs-2 col-md-1">
-                    Views
-                </div>
-            </li>
-    	{% endif %}
-        <li class="row topic-item">
-            <div class="col-xs-8 col-md-10">
-                <div class="media">
-                    {% if not S_IS_BOT %}
-                        <a href="{% if topic.S_UNREAD_TOPIC %}{{ topic.U_NEWEST_POST }}{% else %}{{ topic.U_LAST_POST }}{% endif %}" title="{L_GOTO_LAST_POST}" class="media-object media-object-xs">
-                            <i class="icon icon-topic{% if topic.S_POST_GLOBAL or topic.S_POST_ANNOUNCE %}-announcement{% elseif topic.S_POST_STICKY %}-sticky{% elseif topic.S_TOPIC_REPORTED %}-reported{% endif %}"></i>
-                        </a>
-                    {% else %}
-                        <div class="media-object media-object-xs">
-                            <i class="icon icon-topic{% if topic.S_POST_GLOBAL or topic.S_POST_ANNOUNCE %}-announcement{% elseif topic.S_POST_STICKY %}-sticky{% elseif topic.S_TOPIC_REPORTED %}-reported{% endif %}"></i>
-                        </div>
-                    {% endif %}
-                    <div class="media-body">
-                        <h3 class="media-heading media-heading-sm text-truncate">
-                            <a href="{{ topic.U_VIEW_TOPIC }}" class="topic-title{% if topic.S_UNREAD_TOPIC %} topic-title-unread{% endif %}">{{ topic.TOPIC_TITLE }}</a>
-                        </h3>
-                        <div class="media-subheading text-truncate">
-                            {% if topic.S_TOPIC_UNAPPROVED or topic.S_POSTS_UNAPPROVED %}<a href="{{ topic.U_MCP_QUEUE }}"><i class="icon icon-unapproved"></i></a>{% endif %}
-                            {% if topic.S_TOPIC_DELETED %}<a href="{{ topic.U_MCP_QUEUE }}"><i class="icon icon-topic-deleted"></i></a>{% endif %}
-                            {% if topic.S_TOPIC_REPORTED %}<a href="{{ topic.U_MCP_REPORT }}"><i class="icon icon-reported"></i></a>{% endif %}
-                            {% if topic.S_HAS_POLL %}<i class="icon icon-poll"></i>{% endif %}
-                            {% if topic.ATTACH_ICON_IMG %}<i class="icon icon-attachment"></i>{% endif %}
-                            {% if topic.REPLIES > 0 %}
-                                Most recent by {{ topic.LAST_POST_AUTHOR_FULL }} on {{ topic.FIRST_POST_TIME }}
-                            {% else %}
-                                Started by {{ topic.TOPIC_AUTHOR_FULL }} on {{ topic.LAST_POST_TIME }}
-                            {% endif %}
-                        </div>
+        <div class="panel panel-primary topic">
+            <div class="panel-heading topic-header">
+                <div class="row">
+                    <div class="col-xs-8 col-md-10">
+                        <div class="topic-header-subject">Subject</div>
+                    </div>
+                    <div class="col-xs-2 col-md-1">
+                        Replies
+                    </div>
+                    <div class="col-xs-2 col-md-1">
+                        Views
                     </div>
                 </div>
             </div>
-            <div class="col-xs-2 col-md-1">
-                <div class="media">
+            <div class="list-group">
+    	{% endif %}
+        <a href="{% if S_IS_BOT %}{{ topic.U_VIEW_TOPIC }}{% elseif topic.S_UNREAD_TOPIC %}{{ topic.U_NEWEST_POST }}{% else %}{{ topic.U_LAST_POST }}{% endif %}" class="list-group-item topic-item">
+            <div class="row">
+                <div class="col-xs-8">
+                    <div class="media">
+                        <div class="media-object media-object-xs">
+                            <i class="icon icon-topic{% if topic.S_POST_GLOBAL or topic.S_POST_ANNOUNCE %}-announcement{% elseif topic.S_POST_STICKY %}-sticky{% elseif topic.S_TOPIC_REPORTED %}-reported{% endif %}"></i>
+                        </div>
+                        <div class="media-body">
+                            <h3 class="media-heading media-heading-sm text-truncate">
+                                {{ topic.TOPIC_TITLE }}
+                            </h3>
+                            <div class="media-subheading text-truncate">
+                                {% if topic.S_TOPIC_UNAPPROVED or topic.S_POSTS_UNAPPROVED %}<i class="icon icon-unapproved"></i>{% endif %}
+                                {% if topic.S_TOPIC_DELETED %}<i class="icon icon-topic-deleted"></i>{% endif %}
+                                {% if topic.S_TOPIC_REPORTED %}<i class="icon icon-reported"></i>{% endif %}
+                                {% if topic.S_HAS_POLL %}<i class="icon icon-poll"></i>{% endif %}
+                                {% if topic.ATTACH_ICON_IMG %}<i class="icon icon-attachment"></i>{% endif %}
+                                {% if topic.REPLIES > 0 %}
+                                    Most recent by {{ topic.LAST_POST_AUTHOR }} on {{ topic.FIRST_POST_TIME }}
+                                {% else %}
+                                    Started by {{ topic.TOPIC_AUTHOR }} on {{ topic.LAST_POST_TIME }}
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-2">
                     {{ topic.REPLIES }}
                 </div>
-            </div>
-            <div class="col-xs-2 col-md-1">
-                <div class="media">
+                <div class="col-xs-2">
                     {{ topic.VIEWS }}
                 </div>
             </div>
-        </li>
+        </a>
+        {% if loop.last %}
+            </div>
+        </div>
+        {% endif %}
     {% else %}
     	{% if S_IS_POSTABLE %}
-            <li class="alert alert-info" role="alert">
+            <div class="alert alert-info" role="alert">
                 <strong>{L_NO_TOPICS}</strong>
-            </li>
+            </div>
     	{% endif %}
     {% endfor %}
-    </ul>
 
     {% if loops.topicrow and not S_DISPLAY_ACTIVE %}
         <div class="clearfix">
