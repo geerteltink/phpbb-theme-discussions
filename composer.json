@@ -1,8 +1,8 @@
 {
-	"name": "twentyfirsthall/phpbb-theme-discussions",
+	"name": "xtreamwayz/phpbb-theme-discussions",
 	"type": "phpbb-theme",
 	"description": "Discussions theme for phpBB 3.1",
-	"homepage": "https://github.com/twentyfirsthall/phpbb-theme-discussions",
+	"homepage": "https://github.com/xtreamwayz/phpbb-theme-discussions",
 	"version": "0.0.1",
 	"time": "2015-01-27",
 	"license": "GPL-2.0",
